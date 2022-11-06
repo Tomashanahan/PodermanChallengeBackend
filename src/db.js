@@ -62,13 +62,34 @@ const {
 	Camaras,
 	ExAgroinsumos,
 	Hangar,
-	HangarOficinas,
+	Oficina,
 	Taller,
 	User,
 } = sequelize.models;
 
-// Usuario.hasMany(Pedido);
-// Pedido.hasOne(Usuario);
+CasaPrincipal.hasMany(User);
+User.belongsTo(CasaPrincipal);
+
+Agroinsumos.hasMany(User);
+User.belongsTo(Agroinsumos);
+
+Balanza.hasMany(User);
+User.belongsTo(Balanza);
+
+Camaras.hasMany(User);
+User.belongsTo(Camaras);
+
+ExAgroinsumos.hasMany(User);
+User.belongsTo(ExAgroinsumos);
+
+Hangar.hasMany(User);
+User.belongsTo(Hangar);
+
+Oficina.hasMany(User);
+User.belongsTo(Oficina);
+
+Taller.hasMany(User);
+User.belongsTo(Taller);
 
 module.exports = {
 	...sequelize.models,

@@ -28,7 +28,8 @@ router.post("/", async (req, res) => {
 				team, /// Solo por pruebas
 			});
 
-			res.json("Usuario creado correctamente");
+			// res.json("Usuario creado correctamente");
+			res.json(newUser);
 		}
 	} catch (error) {
 		res.status(400).send(`El correo ya existe ${error}`);

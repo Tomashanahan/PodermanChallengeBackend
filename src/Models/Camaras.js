@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
 		preference_id: {
 			type: DataTypes.STRING,
 		},
-		Chequear_visualizacion: {
+		ChequearVisualizacion: {
 			type: DataTypes.STRING, // ESTO TIENE QUE SER FOTO
 			allowNull: false,
 		},

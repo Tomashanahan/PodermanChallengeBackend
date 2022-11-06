@@ -1,19 +1,19 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-	sequelize.define("Hangar_Oficina", {
+	sequelize.define("Oficina", {
 		preference_id: {
 			type: DataTypes.STRING,
 		},
-		Funcionamiento_teléfono: {
+		FuncionamientoTelefono: {
 			type: DataTypes.STRING, // ESTO TIENE QUE SER FOTO
 			allowNull: false,
 		},
-		Limpiar_PC: {
+		LimpiarPC: {
 			type: DataTypes.STRING, // ESTO TIENE QUE SER FOTO
 			allowNull: false,
 		},
-		Acomodar_cables: {
+		AcomodarCables: {
 			type: DataTypes.STRING, // ESTO TIENE QUE SER FOTO
 			allowNull: false,
 		},

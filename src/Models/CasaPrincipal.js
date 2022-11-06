@@ -5,11 +5,19 @@ module.exports = (sequelize) => {
 		preference_id: {
 			type: DataTypes.STRING,
 		},
-		Funcionamiento_AP: {
+		RackPrincipalLimpieza: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		Funcionamiento_teléfono: {
+		RackPrincipalOrden: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		FuncionamientoAP: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		FuncionamientoTelefono: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},

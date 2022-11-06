@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
 		preference_id: {
 			type: DataTypes.STRING,
 		},
-		Funcionamiento_AP: {
+		FuncionamientoAP: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
