@@ -5,14 +5,15 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, NODE_ENV } =
 	process.env;
 
 const casaPrincipal_model = require("./Models/CasaPrincipal");
-const exAgroinsumos_model = require("./Models/ExAgroinsumos");
 const agroinsumos_model = require("./Models/Agroinsumos");
+const exAgroinsumos_model = require("./Models/ExAgroinsumos");
 const balanza_model = require("./Models/Balanza");
 const camaras_model = require("./Models/Camaras");
 const hangar_model = require("./Models/Hangar");
 const hangaroficina_model = require("./Models/HangarOficina");
 const taller_model = require("./Models/Taller");
 const user_model = require("./Models/User");
+const visita_model = require("./Models/Visita");
 
 const sequelize =
 	NODE_ENV === "production"
@@ -54,6 +55,7 @@ hangar_model(sequelize);
 hangaroficina_model(sequelize);
 taller_model(sequelize);
 user_model(sequelize);
+visita_model(sequelize);
 
 const {
 	CasaPrincipal,
@@ -65,31 +67,35 @@ const {
 	Oficina,
 	Taller,
 	User,
+	Visita,
 } = sequelize.models;
 
-CasaPrincipal.hasMany(User);
-User.belongsTo(CasaPrincipal);
+// User.hasMany(Visita);
+// Visita.belongsTo(User);
 
-Agroinsumos.hasMany(User);
-User.belongsTo(Agroinsumos);
+User.hasMany(CasaPrincipal);
+CasaPrincipal.belongsTo(User);
 
-Balanza.hasMany(User);
-User.belongsTo(Balanza);
+User.hasMany(Agroinsumos);
+Agroinsumos.belongsTo(User);
 
-Camaras.hasMany(User);
-User.belongsTo(Camaras);
+User.hasMany(Balanza);
+Balanza.belongsTo(User);
 
-ExAgroinsumos.hasMany(User);
-User.belongsTo(ExAgroinsumos);
+User.hasMany(Camaras);
+Camaras.belongsTo(User);
 
-Hangar.hasMany(User);
-User.belongsTo(Hangar);
+User.hasMany(ExAgroinsumos);
+ExAgroinsumos.belongsTo(User);
 
-Oficina.hasMany(User);
-User.belongsTo(Oficina);
+User.hasMany(Hangar);
+Hangar.belongsTo(User);
 
-Taller.hasMany(User);
-User.belongsTo(Taller);
+User.hasMany(Oficina);
+Oficina.belongsTo(User);
+
+User.hasMany(Taller);
+Taller.belongsTo(User);
 
 module.exports = {
 	...sequelize.models,

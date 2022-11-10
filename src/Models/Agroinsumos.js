@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
 		},
 		FuncionamientoAP: {
 			type: DataTypes.STRING,
-			allowNull: false,
 		},
 	});
 };

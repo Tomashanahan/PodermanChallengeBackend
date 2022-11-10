@@ -7,15 +7,12 @@ module.exports = (sequelize) => {
 		},
 		FuncionamientoTelefono: {
 			type: DataTypes.STRING, // ESTO TIENE QUE SER FOTO
-			allowNull: false,
 		},
 		LimpiarPC: {
 			type: DataTypes.STRING, // ESTO TIENE QUE SER FOTO
-			allowNull: false,
 		},
 		AcomodarCables: {
 			type: DataTypes.STRING, // ESTO TIENE QUE SER FOTO
-			allowNull: false,
 		},
 	});
 };

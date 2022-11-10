@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
 		},
 		ChequearVisualizacion: {
 			type: DataTypes.STRING, // ESTO TIENE QUE SER FOTO
-			allowNull: false,
 		},
 	});
 };

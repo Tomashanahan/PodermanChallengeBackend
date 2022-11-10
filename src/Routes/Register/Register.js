@@ -6,14 +6,14 @@ const router = Router();
 
 router.post("/", async (req, res) => {
 	try {
-		const { fullName, email, password, team } = req.body;
+		const { fullName, email, password, team, rol } = req.body;
 		//Previene usuarios registrados
 		const serarchigExistingUser = await User.findOne({
 			where: { email },
 		});
 
 		if (serarchigExistingUser) {
-			const error = new Error("El correo ya existeeeeee");
+			const error = new Error("El correo ya existe");
 			return res.status(400).json({ msg: error.message });
 		} else {
 			//Hash pass
@@ -24,8 +24,9 @@ router.post("/", async (req, res) => {
 			const newUser = await User.create({
 				fullName,
 				email,
-				password: hashedPassword,
-				team, /// Solo por pruebas
+				hashedPassword,
+				team,
+				rol: rol ?? "User",
 			});
 
 			// res.json("Usuario creado correctamente");

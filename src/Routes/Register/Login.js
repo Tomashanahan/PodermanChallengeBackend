@@ -15,6 +15,11 @@ const cloudinaryConfig = cloudinary.config({
 	secure: true,
 });
 
+router.delete("/", (req,res) => {
+	// cloudinary.api.delete_resources_by_prefix('PodermanImages', function(result){ res.json(result) });
+	cloudinary.api.delete_all_resources();
+})
+
 router.post("/", async (req, res) => {
 	try {
 		const { email, password } = req.body;
@@ -42,13 +47,14 @@ router.post("/", async (req, res) => {
 			return bcrypt.compareSync(_password, hash);
 		};
 
-		if (await comprobarPassword(password, checkIfUserExists.password)) {
+		if (await comprobarPassword(password, checkIfUserExists.hashedPassword)) {
 			//autenticar -JWT
 			res.json({
 				id: checkIfUserExists.id,
 				fullName: checkIfUserExists.fullName,
 				email: checkIfUserExists.email,
 				team: checkIfUserExists.team,
+				rol: checkIfUserExists.rol,
 				token: generarJWT(checkIfUserExists),
 				cloudinaryInfo: { timestamp, signature },
 			});
