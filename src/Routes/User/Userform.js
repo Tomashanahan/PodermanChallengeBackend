@@ -251,6 +251,7 @@ router.get("/", async (req, res) => {
 	});
 });
 
+// router.put("/casa-principal", async (req, res) => {
 router.put("/casaprincipal", async (req, res) => {
 	const { email } = req.registro;
 	const {
@@ -262,7 +263,7 @@ router.put("/casaprincipal", async (req, res) => {
 	} = req.body;
 	const user = await User.findOne({ where: { email } });
 
-	const casaprincipal = await CasaPrincipal.findOne(
+	const casaPrincipal = await CasaPrincipal.findOne(
 		{
 			where: {
 				UserId: user.id,
@@ -288,20 +289,22 @@ router.put("/casaprincipal", async (req, res) => {
 			include: User,
 		}
 	);
-	casaprincipal["RackPrincipalLimpieza"] = RackPrincipalLimpieza;
-	casaprincipal["RackPrincipalOrden"] = RackPrincipalOrden;
-	casaprincipal["FuncionamientoAP"] = FuncionamientoAP;
-	casaprincipal["FuncionamientoTelefono"] = FuncionamientoTelefono;
-	casaprincipal["UPS"] = UPS;
+	RackPrincipalLimpieza !== "" && (casaPrincipal["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
+	RackPrincipalOrden !== "" && (casaPrincipal["RackPrincipalOrden"] = RackPrincipalOrden);
+	FuncionamientoAP !== "" && (casaPrincipal["FuncionamientoAP"] = FuncionamientoAP);
+	FuncionamientoTelefono !== "" && (casaPrincipal["FuncionamientoTelefono"] = FuncionamientoTelefono);
+	UPS !== "" && (casaPrincipal["UPS"] = UPS);
 
-	await casaprincipal.save();
+	await casaPrincipal.save();
 
 	res.json({
-		casaPrincipal: casaprincipal,
+		casaPrincipal: casaPrincipal,
 	});
 });
 
-router.put("/exAgroinsumos", async (req, res) => {t
+// router.put("/ex-agroinsumos", async (req, res) => {
+router.put("/exAgroinsumos", async (req, res) => {
+	t;
 	const { email } = req.registro;
 	const { RackPrincipalLimpieza, RackPrincipalOrden, FuncionamientoAP } =
 		req.body;
@@ -327,9 +330,12 @@ router.put("/exAgroinsumos", async (req, res) => {t
 			include: User,
 		}
 	);
-	exagroinsumos["RackPrincipalLimpieza"] = RackPrincipalLimpieza;
-	exagroinsumos["RackPrincipalOrden"] = RackPrincipalOrden;
-	exagroinsumos["FuncionamientoAP"] = FuncionamientoAP;
+	RackPrincipalLimpieza !== "" &&
+		(exagroinsumos["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
+	RackPrincipalOrden !== "" &&
+		(exagroinsumos["RackPrincipalOrden"] = RackPrincipalOrden);
+	FuncionamientoAP !== "" &&
+		(exagroinsumos["FuncionamientoAP"] = FuncionamientoAP);
 
 	await exagroinsumos.save();
 
@@ -371,10 +377,13 @@ router.put("/taller", async (req, res) => {
 			include: User,
 		}
 	);
-	taller["RackPrincipalLimpieza"] = RackPrincipalLimpieza;
-	taller["RackPrincipalOrden"] = RackPrincipalOrden;
-	taller["FuncionamientoTelefono"] = FuncionamientoTelefono;
-	taller["FuncionamientoAP"] = FuncionamientoAP;
+	RackPrincipalLimpieza !== "" &&
+		(taller["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
+	RackPrincipalOrden !== "" &&
+		(taller["RackPrincipalOrden"] = RackPrincipalOrden);
+	FuncionamientoTelefono !== "" &&
+		(taller["FuncionamientoTelefono"] = FuncionamientoTelefono);
+	FuncionamientoAP !== "" && (taller["FuncionamientoAP"] = FuncionamientoAP);
 
 	await taller.save();
 
@@ -416,10 +425,13 @@ router.put("/hangar", async (req, res) => {
 			include: User,
 		}
 	);
-	hangar["RackPrincipalLimpieza"] = RackPrincipalLimpieza;
-	hangar["RackPrincipalOrden"] = RackPrincipalOrden;
-	hangar["FuncionamientoAP"] = FuncionamientoAP;
-	hangar["FuncionamientoTelefono"] = FuncionamientoTelefono;
+	RackPrincipalLimpieza !== "" &&
+		(hangar["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
+	RackPrincipalOrden !== "" &&
+		(hangar["RackPrincipalOrden"] = RackPrincipalOrden);
+	FuncionamientoAP !== "" && (hangar["FuncionamientoAP"] = FuncionamientoAP);
+	FuncionamientoTelefono !== "" &&
+		(hangar["FuncionamientoTelefono"] = FuncionamientoTelefono);
 
 	await hangar.save();
 
@@ -453,9 +465,10 @@ router.put("/oficina", async (req, res) => {
 			include: User,
 		}
 	);
-	oficina["FuncionamientoTelefono"] = FuncionamientoTelefono;
-	oficina["LimpiarPC"] = LimpiarPC;
-	oficina["AcomodarCables"] = AcomodarCables;
+	FuncionamientoTelefono !== "" &&
+		(oficina["FuncionamientoTelefono"] = FuncionamientoTelefono);
+	LimpiarPC !== "" && (oficina["LimpiarPC"] = LimpiarPC);
+	AcomodarCables !== "" && (oficina["AcomodarCables"] = AcomodarCables);
 
 	await oficina.save();
 
@@ -504,11 +517,11 @@ router.put("/balanza", async (req, res) => {
 			include: User,
 		}
 	);
-	balanza["FuncionamientoTelefono"] = FuncionamientoTelefono;
-	balanza["FuncionamientoAP"] = FuncionamientoAP;
-	balanza["UPS"] = UPS;
-	balanza["LimpiarPC"] = LimpiarPC;
-	balanza["RackPrincipalOrden"] = RackPrincipalOrden;
+	FuncionamientoTelefono !== "" && (balanza["FuncionamientoTelefono"] = FuncionamientoTelefono);
+	FuncionamientoAP !== "" && (balanza["FuncionamientoAP"] = FuncionamientoAP);
+	UPS !== "" && (balanza["UPS"] = UPS);
+	LimpiarPC !== "" && (balanza["LimpiarPC"] = LimpiarPC);
+	RackPrincipalOrden !== "" && (balanza["RackPrincipalOrden"] = RackPrincipalOrden);
 
 	await balanza.save();
 
@@ -536,7 +549,7 @@ router.put("/agroinsumos", async (req, res) => {
 			include: User,
 		}
 	);
-	agroinsumos["FuncionamientoAP"] = FuncionamientoAP;
+	FuncionamientoAP !== "" && (agroinsumos["FuncionamientoAP"] = FuncionamientoAP);
 
 	await agroinsumos.save();
 
@@ -564,7 +577,7 @@ router.put("/camaras", async (req, res) => {
 			include: User,
 		}
 	);
-	camaras["ChequearVisualizacion"] = ChequearVisualizacion;
+	ChequearVisualizacion !== "" && (camaras["ChequearVisualizacion"] = ChequearVisualizacion);
 
 	await camaras.save();
 
