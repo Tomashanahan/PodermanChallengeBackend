@@ -12,34 +12,18 @@ const { Camaras } = require("../../db");
 const router = Router();
 
 router.get("/getAllInformation", async (req, res) => {
-	const casaprincipal = await CasaPrincipal.findAll({
-		order: [["createdAt", "DESC"]],
-	});
-	const exagroinsumos = await ExAgroinsumos.findAll({
-		order: [["createdAt", "DESC"]],
-	});
-	const taller = await Taller.findAll({
-		order: [["createdAt", "DESC"]],
-	});
-	const hangar = await Hangar.findAll({
-		order: [["createdAt", "DESC"]],
-	});
-	const oficina = await Oficina.findAll({
-		order: [["createdAt", "DESC"]],
-	});
-	const balanza = await Balanza.findAll({
-		order: [["createdAt", "DESC"]],
-	});
-	const agroinsumos = await Agroinsumos.findAll({
-		order: [["createdAt", "DESC"]],
-	});
-	const camaras = await Camaras.findAll({
-		order: [["createdAt", "DESC"]],
-	});
+	const casaPrincipal = await CasaPrincipal.findAll({ include: User }, { order: [["createdAt", "DESC"]] } );
+	const exAgroinsumos = await ExAgroinsumos.findAll({ include: User }, { order: [["createdAt", "DESC"]] } );
+	const taller = await Taller.findAll({ include: User }, { order: [["createdAt", "DESC"]] } );
+	const hangar = await Hangar.findAll({ include: User }, { order: [["createdAt", "DESC"]] } );
+	const oficina = await Oficina.findAll({ include: User }, { order: [["createdAt", "DESC"]] } );
+	const balanza = await Balanza.findAll({ include: User }, { order: [["createdAt", "DESC"]] } );
+	const agroinsumos = await Agroinsumos.findAll({ include: User }, { order: [["createdAt", "DESC"]] } );
+	const camaras = await Camaras.findAll({ include: User }, { order: [["createdAt", "DESC"]] } );
 
 	res.json({
-		casaprincipal,
-		exagroinsumos,
+		casaPrincipal,
+		exAgroinsumos,
 		taller,
 		hangar,
 		oficina,

@@ -7,7 +7,7 @@ const checkRolAdminMiddleware = async (req, res, next) => {
 		try {
 			token = req.headers.authorization.split(" ")[1];
 
-			if (req.registro.team === "Admin") {
+			if (req.registro.rol === "Admin") {
 				next();
 				return;
 			} else {

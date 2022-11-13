@@ -15,7 +15,7 @@ const checkAuth = async (req, res, next) => {
 
 			req.registro = await User.findOne({
 				where: { id: decoded.id, email: decoded.email, team: decoded.team },
-				attributes: ["id","fullName", "email", "team"],
+				attributes: ["id","fullName", "email", "team", "rol"],
 			});
 
 			return next();

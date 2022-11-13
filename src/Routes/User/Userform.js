@@ -13,6 +13,7 @@ const { Camaras } = require("../../db");
 
 const router = Router();
 router.post("/form", async (req, res) => {
+	const { typeOfCategory } = req.query;
 	const user = req.registro;
 	const {
 		CasaPrincipal: _casaprincipal,
@@ -30,28 +31,49 @@ router.post("/form", async (req, res) => {
 		return newElements;
 	};
 
-	Promise.resolve(loopKey(_casaprincipal, CasaPrincipal)).then((res) =>
-		user.addCasaPrincipal(res)
-	);
-	Promise.resolve(loopKey(_exagroinsumos, ExAgroinsumos)).then((res) =>
-		user.addExAgroinsumo(res)
-	);
-	Promise.resolve(loopKey(_taller, Taller)).then((res) => user.addTaller(res));
-	Promise.resolve(loopKey(_hangar, Hangar)).then((res) => user.addHangar(res));
-	Promise.resolve(loopKey(_oficina, Oficina)).then((res) =>
-		user.addOficina(res)
-	);
-	Promise.resolve(loopKey(_balanza, Balanza)).then((res) =>
-		user.addBalanza(res)
-	);
-	Promise.resolve(loopKey(_agroinsumos, Agroinsumos)).then((res) =>
-		user.addAgroinsumo(res)
-	);
-	Promise.resolve(loopKey(_camaras, Camaras)).then((res) =>
-		user.addCamara(res)
-	);
+	switch (typeOfCategory) {
+		case "casaPrincipal":
+			Promise.resolve(loopKey(_casaprincipal, CasaPrincipal)).then((res) =>
+				user.addCasaPrincipal(res)
+			);
+			break;
+		case "exAgroinsumos":
+			Promise.resolve(loopKey(_exagroinsumos, ExAgroinsumos)).then((res) =>
+				user.addExAgroinsumo(res)
+			);
+			break;
+		case "taller":
+			Promise.resolve(loopKey(_taller, Taller)).then((res) =>
+				user.addTaller(res)
+			);
+			break;
+		case "hangar":
+			Promise.resolve(loopKey(_hangar, Hangar)).then((res) =>
+				user.addHangar(res)
+			);
+			break;
+		case "oficina":
+			Promise.resolve(loopKey(_oficina, Oficina)).then((res) =>
+				user.addOficina(res)
+			);
+			break;
+		case "balanza":
+			Promise.resolve(loopKey(_balanza, Balanza)).then((res) =>
+				user.addBalanza(res)
+			);
+			break;
+		case "agroinsumos":
+			Promise.resolve(loopKey(_agroinsumos, Agroinsumos)).then((res) =>
+				user.addAgroinsumo(res)
+			);
+			break;
+		case "camaras":
+			Promise.resolve(loopKey(_camaras, Camaras)).then((res) =>
+				user.addCamara(res)
+			);
+			break;
+	}
 
-	// res.json(user);
 	res.json({
 		CasaPrincipal: _casaprincipal,
 		ExAgroinsumos: _exagroinsumos,
@@ -251,16 +273,16 @@ router.get("/", async (req, res) => {
 	});
 });
 
-// router.put("/casa-principal", async (req, res) => {
 router.put("/casaprincipal", async (req, res) => {
 	const { email } = req.registro;
+	const { CasaPrincipal : _CasaPrincipal } = req.body;
 	const {
 		RackPrincipalLimpieza,
 		RackPrincipalOrden,
 		FuncionamientoAP,
 		FuncionamientoTelefono,
 		UPS,
-	} = req.body;
+	} = _CasaPrincipal;
 	const user = await User.findOne({ where: { email } });
 
 	const casaPrincipal = await CasaPrincipal.findOne(
@@ -289,11 +311,14 @@ router.put("/casaprincipal", async (req, res) => {
 			include: User,
 		}
 	);
-	RackPrincipalLimpieza !== "" && (casaPrincipal["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
-	RackPrincipalOrden !== "" && (casaPrincipal["RackPrincipalOrden"] = RackPrincipalOrden);
-	FuncionamientoAP !== "" && (casaPrincipal["FuncionamientoAP"] = FuncionamientoAP);
-	FuncionamientoTelefono !== "" && (casaPrincipal["FuncionamientoTelefono"] = FuncionamientoTelefono);
-	UPS !== "" && (casaPrincipal["UPS"] = UPS);
+	RackPrincipalLimpieza &&
+		(casaPrincipal["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
+	RackPrincipalOrden &&
+		(casaPrincipal["RackPrincipalOrden"] = RackPrincipalOrden);
+	FuncionamientoAP && (casaPrincipal["FuncionamientoAP"] = FuncionamientoAP);
+	FuncionamientoTelefono &&
+		(casaPrincipal["FuncionamientoTelefono"] = FuncionamientoTelefono);
+	UPS && (casaPrincipal["UPS"] = UPS);
 
 	await casaPrincipal.save();
 
@@ -304,10 +329,9 @@ router.put("/casaprincipal", async (req, res) => {
 
 // router.put("/ex-agroinsumos", async (req, res) => {
 router.put("/exAgroinsumos", async (req, res) => {
-	t;
 	const { email } = req.registro;
-	const { RackPrincipalLimpieza, RackPrincipalOrden, FuncionamientoAP } =
-		req.body;
+	const { ExAgroinsumos : _ExAgroinsumos } = req.body;
+	const { RackPrincipalLimpieza, RackPrincipalOrden, FuncionamientoAP } = _ExAgroinsumos;
 	const user = await User.findOne({ where: { email } });
 
 	const exagroinsumos = await ExAgroinsumos.findOne(
@@ -330,12 +354,11 @@ router.put("/exAgroinsumos", async (req, res) => {
 			include: User,
 		}
 	);
-	RackPrincipalLimpieza !== "" &&
+	RackPrincipalLimpieza &&
 		(exagroinsumos["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
-	RackPrincipalOrden !== "" &&
+	RackPrincipalOrden &&
 		(exagroinsumos["RackPrincipalOrden"] = RackPrincipalOrden);
-	FuncionamientoAP !== "" &&
-		(exagroinsumos["FuncionamientoAP"] = FuncionamientoAP);
+	FuncionamientoAP && (exagroinsumos["FuncionamientoAP"] = FuncionamientoAP);
 
 	await exagroinsumos.save();
 
@@ -346,12 +369,13 @@ router.put("/exAgroinsumos", async (req, res) => {
 
 router.put("/taller", async (req, res) => {
 	const { email } = req.registro;
+	const { Taller: _Taller } = req.body;
 	const {
 		RackPrincipalLimpieza,
 		RackPrincipalOrden,
 		FuncionamientoTelefono,
 		FuncionamientoAP,
-	} = req.body;
+	} = _Taller;
 	const user = await User.findOne({ where: { email } });
 
 	const taller = await Taller.findOne(
@@ -377,13 +401,17 @@ router.put("/taller", async (req, res) => {
 			include: User,
 		}
 	);
-	RackPrincipalLimpieza !== "" &&
+
+	RackPrincipalLimpieza &&
 		(taller["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
-	RackPrincipalOrden !== "" &&
-		(taller["RackPrincipalOrden"] = RackPrincipalOrden);
-	FuncionamientoTelefono !== "" &&
+	RackPrincipalOrden && (taller["RackPrincipalOrden"] = RackPrincipalOrden);
+	FuncionamientoTelefono &&
 		(taller["FuncionamientoTelefono"] = FuncionamientoTelefono);
-	FuncionamientoAP !== "" && (taller["FuncionamientoAP"] = FuncionamientoAP);
+	FuncionamientoAP && (taller["FuncionamientoAP"] = FuncionamientoAP);
+	// taller.RackPrincipalLimpieza = RackPrincipalLimpieza;
+	// taller.RackPrincipalOrden = RackPrincipalOrden;
+	// taller.FuncionamientoTelefono = FuncionamientoTelefono;
+	// taller.FuncionamientoAP = FuncionamientoAP;
 
 	await taller.save();
 
@@ -394,12 +422,13 @@ router.put("/taller", async (req, res) => {
 
 router.put("/hangar", async (req, res) => {
 	const { email } = req.registro;
+	const { Hangar : _Hangar } = req.body;
 	const {
 		RackPrincipalLimpieza,
 		RackPrincipalOrden,
 		FuncionamientoAP,
 		FuncionamientoTelefono,
-	} = req.body;
+	} = _Hangar;
 	const user = await User.findOne({ where: { email } });
 
 	const hangar = await Hangar.findOne(
@@ -425,12 +454,11 @@ router.put("/hangar", async (req, res) => {
 			include: User,
 		}
 	);
-	RackPrincipalLimpieza !== "" &&
+	RackPrincipalLimpieza &&
 		(hangar["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
-	RackPrincipalOrden !== "" &&
-		(hangar["RackPrincipalOrden"] = RackPrincipalOrden);
-	FuncionamientoAP !== "" && (hangar["FuncionamientoAP"] = FuncionamientoAP);
-	FuncionamientoTelefono !== "" &&
+	RackPrincipalOrden && (hangar["RackPrincipalOrden"] = RackPrincipalOrden);
+	FuncionamientoAP && (hangar["FuncionamientoAP"] = FuncionamientoAP);
+	FuncionamientoTelefono &&
 		(hangar["FuncionamientoTelefono"] = FuncionamientoTelefono);
 
 	await hangar.save();
@@ -442,7 +470,8 @@ router.put("/hangar", async (req, res) => {
 
 router.put("/oficina", async (req, res) => {
 	const { email } = req.registro;
-	const { FuncionamientoTelefono, LimpiarPC, AcomodarCables } = req.body;
+	const { Oficina : _Oficina } = req.body;
+	const { FuncionamientoTelefono, LimpiarPC, AcomodarCables } = _Oficina;
 	const user = await User.findOne({ where: { email } });
 
 	const oficina = await Oficina.findOne(
@@ -465,10 +494,10 @@ router.put("/oficina", async (req, res) => {
 			include: User,
 		}
 	);
-	FuncionamientoTelefono !== "" &&
+	FuncionamientoTelefono &&
 		(oficina["FuncionamientoTelefono"] = FuncionamientoTelefono);
-	LimpiarPC !== "" && (oficina["LimpiarPC"] = LimpiarPC);
-	AcomodarCables !== "" && (oficina["AcomodarCables"] = AcomodarCables);
+	LimpiarPC && (oficina["LimpiarPC"] = LimpiarPC);
+	AcomodarCables && (oficina["AcomodarCables"] = AcomodarCables);
 
 	await oficina.save();
 
@@ -479,13 +508,15 @@ router.put("/oficina", async (req, res) => {
 
 router.put("/balanza", async (req, res) => {
 	const { email } = req.registro;
+	const { Balanza: _Balanza } = req.body;
 	const {
+		RackPrincipalLimpieza,
 		RackPrincipalOrden,
-		LimpiarPC,
 		FuncionamientoAP,
+		LimpiarPC,
 		UPS,
 		FuncionamientoTelefono,
-	} = req.body;
+	} = _Balanza;
 	const user = await User.findOne({ where: { email } });
 
 	const balanza = await Balanza.findOne(
@@ -517,11 +548,13 @@ router.put("/balanza", async (req, res) => {
 			include: User,
 		}
 	);
-	FuncionamientoTelefono !== "" && (balanza["FuncionamientoTelefono"] = FuncionamientoTelefono);
-	FuncionamientoAP !== "" && (balanza["FuncionamientoAP"] = FuncionamientoAP);
-	UPS !== "" && (balanza["UPS"] = UPS);
-	LimpiarPC !== "" && (balanza["LimpiarPC"] = LimpiarPC);
-	RackPrincipalOrden !== "" && (balanza["RackPrincipalOrden"] = RackPrincipalOrden);
+	FuncionamientoTelefono &&
+		(balanza["FuncionamientoTelefono"] = FuncionamientoTelefono);
+	FuncionamientoAP && (balanza["FuncionamientoAP"] = FuncionamientoAP);
+	RackPrincipalLimpieza && (balanza["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
+	UPS && (balanza["UPS"] = UPS);
+	LimpiarPC && (balanza["LimpiarPC"] = LimpiarPC);
+	RackPrincipalOrden && (balanza["RackPrincipalOrden"] = RackPrincipalOrden);
 
 	await balanza.save();
 
@@ -532,7 +565,8 @@ router.put("/balanza", async (req, res) => {
 
 router.put("/agroinsumos", async (req, res) => {
 	const { email } = req.registro;
-	const { FuncionamientoAP } = req.body;
+	const { Agroinsumos: _Agroinsumos } = req.body;
+	const { FuncionamientoAP } = _Agroinsumos;
 	const user = await User.findOne({ where: { email } });
 
 	const agroinsumos = await Agroinsumos.findOne(
@@ -549,7 +583,7 @@ router.put("/agroinsumos", async (req, res) => {
 			include: User,
 		}
 	);
-	FuncionamientoAP !== "" && (agroinsumos["FuncionamientoAP"] = FuncionamientoAP);
+	FuncionamientoAP && (agroinsumos["FuncionamientoAP"] = FuncionamientoAP);
 
 	await agroinsumos.save();
 
@@ -560,7 +594,9 @@ router.put("/agroinsumos", async (req, res) => {
 
 router.put("/camaras", async (req, res) => {
 	const { email } = req.registro;
-	const { ChequearVisualizacion } = req.body;
+	const { Camaras: _Camaras } = req.body;
+
+	const { ChequearVisualizacion } = _Camaras;
 	const user = await User.findOne({ where: { email } });
 
 	const camaras = await Camaras.findOne(
@@ -577,7 +613,8 @@ router.put("/camaras", async (req, res) => {
 			include: User,
 		}
 	);
-	ChequearVisualizacion !== "" && (camaras["ChequearVisualizacion"] = ChequearVisualizacion);
+	ChequearVisualizacion &&
+		(camaras["ChequearVisualizacion"] = ChequearVisualizacion);
 
 	await camaras.save();
 
