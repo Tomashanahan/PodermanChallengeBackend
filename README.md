@@ -230,4 +230,3 @@ Install my-project with npm
 | :-------- | :------- |
 | ***`ChequearVisualizacion`***  | ***string***  |
 
-------------
