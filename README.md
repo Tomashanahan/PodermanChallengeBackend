@@ -2,9 +2,9 @@
 
 Install my-project with npm
 
-```
-  npm install 
-  cd my-project
+```bash
+  npm install
+  npm start
 ```
 
 ## Things I think I could do better
