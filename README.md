@@ -7,6 +7,14 @@ Install my-project with npm
   cd my-project
 ```
 
+## Things I think I could do better
+
+- Create a field to put the date where the visit was created and check every time the user want to add or modify the information she if is in the 24hs range, and if is not deny the action
+
+- Testing (It was my fault. I run out of time to test the project)
+
+- Adding more error handlers
+
 ## API Reference
 
 #### Get all the user information
