@@ -7,6 +7,19 @@ Install my-project with npm
   npm start
 ```
 
+**Enviorment Variables**:
+- *REACT_APP_CLOUD_NAME = Coudinary account info*
+- *REACT_APP_CLOUD_API_KEY = Coudinary account info*
+- *REACT_APP_CLOUD_SECRET = Coudinary account info*
+- *REACT_APP_BACKEND_URL = Backend base url* 
+- *DB_USER =  Database information*
+- *DB_PASSWORD =  Database information*
+- *DB_HOST =  Database information*
+- *DB_NAME =  Database information*
+- *DB_PORT =  Database information*
+- *PORT =  Database information*
+- *JWT_SECRET = Jason web token secret*
+
 ## Things I think I could do better
 
 - Create a field to put the date where the visit was created and check every time the user want to add or modify the information she if is in the 24hs range, and if is not deny the action
