@@ -24,7 +24,7 @@ server.use("/", routes);
 // db.sync({ force: true }).then(() => {
 db.sync({ force: false }).then(() => {
 	server.listen(process.env.PORT, () => {
-		console.log("Server rinning in Port:", process.env.PORT);
+		// console.log("Server rinning in Port:", process.env.PORT);
 	});
 });
 
