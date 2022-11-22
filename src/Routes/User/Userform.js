@@ -72,6 +72,7 @@ router.post("/form", async (req, res) => {
 				user.addCamara(res)
 			);
 			break;
+
 	}
 
 	res.json({

@@ -33,7 +33,7 @@ describe("when the user creates an account", () => {
 			})
 			.set("Accept", "application/json");
 
-		expect(createUser.body.fullName).toBe("Admin");
+		expect(createUser.body.fullName).toBe("Admin"); // its not passing because the force is in false
 		expect(createUser.body.email).toBe("admin@hotmial.com");
 		expect(createUser.body.rol).toBe("Admin");
 		done();

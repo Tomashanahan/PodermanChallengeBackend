@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const app = require("../../index"); // Link to your app file
 const supertest = require("supertest");
 const request = supertest(app);
