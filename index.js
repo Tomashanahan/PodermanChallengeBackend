@@ -28,4 +28,20 @@ db.sync({ force: false }).then(() => {
 	});
 });
 
+// if (process.env.PORT_TESTIN === "null") {
+// 	console.log("first");
+// 	db.sync({ force: false }).then(() => {
+// 		server.listen(process.env.PORT, () => {
+// 			console.log("Server rinning in Port:", process.env.PORT);
+// 		});
+// 	});
+// } else {
+// 	console.log('process.env.PORT_TESTIN:', process.env.PORT_TESTIN)
+// 	db.sync({ force: true }).then(() => {
+// 		server.listen(process.env.PORT_TESTIN, () => {
+// 			console.log("Server rinning in Port:", process.env.PORT_TESTIN);
+// 		});
+// 	});
+// }
+
 module.exports = server;
