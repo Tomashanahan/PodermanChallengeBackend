@@ -72,7 +72,6 @@ router.post("/form", async (req, res) => {
 				user.addCamara(res)
 			);
 			break;
-
 	}
 
 	res.json({
@@ -276,14 +275,13 @@ router.get("/", async (req, res) => {
 
 router.put("/casaprincipal", async (req, res) => {
 	const { email } = req.registro;
-	const { CasaPrincipal : _CasaPrincipal } = req.body;
 	const {
 		RackPrincipalLimpieza,
 		RackPrincipalOrden,
 		FuncionamientoAP,
 		FuncionamientoTelefono,
 		UPS,
-	} = _CasaPrincipal;
+	} = req.body;
 	const user = await User.findOne({ where: { email } });
 
 	const casaPrincipal = await CasaPrincipal.findOne(
@@ -328,11 +326,10 @@ router.put("/casaprincipal", async (req, res) => {
 	});
 });
 
-// router.put("/ex-agroinsumos", async (req, res) => {
 router.put("/exAgroinsumos", async (req, res) => {
 	const { email } = req.registro;
-	const { ExAgroinsumos : _ExAgroinsumos } = req.body;
-	const { RackPrincipalLimpieza, RackPrincipalOrden, FuncionamientoAP } = _ExAgroinsumos;
+	const { RackPrincipalLimpieza, RackPrincipalOrden, FuncionamientoAP } =
+		req.body;
 	const user = await User.findOne({ where: { email } });
 
 	const exagroinsumos = await ExAgroinsumos.findOne(
@@ -370,13 +367,12 @@ router.put("/exAgroinsumos", async (req, res) => {
 
 router.put("/taller", async (req, res) => {
 	const { email } = req.registro;
-	const { Taller: _Taller } = req.body;
 	const {
 		RackPrincipalLimpieza,
 		RackPrincipalOrden,
 		FuncionamientoTelefono,
 		FuncionamientoAP,
-	} = _Taller;
+	} = req.body;
 	const user = await User.findOne({ where: { email } });
 
 	const taller = await Taller.findOne(
@@ -409,10 +405,6 @@ router.put("/taller", async (req, res) => {
 	FuncionamientoTelefono &&
 		(taller["FuncionamientoTelefono"] = FuncionamientoTelefono);
 	FuncionamientoAP && (taller["FuncionamientoAP"] = FuncionamientoAP);
-	// taller.RackPrincipalLimpieza = RackPrincipalLimpieza;
-	// taller.RackPrincipalOrden = RackPrincipalOrden;
-	// taller.FuncionamientoTelefono = FuncionamientoTelefono;
-	// taller.FuncionamientoAP = FuncionamientoAP;
 
 	await taller.save();
 
@@ -423,13 +415,12 @@ router.put("/taller", async (req, res) => {
 
 router.put("/hangar", async (req, res) => {
 	const { email } = req.registro;
-	const { Hangar : _Hangar } = req.body;
 	const {
 		RackPrincipalLimpieza,
 		RackPrincipalOrden,
 		FuncionamientoAP,
 		FuncionamientoTelefono,
-	} = _Hangar;
+	} = req.body;
 	const user = await User.findOne({ where: { email } });
 
 	const hangar = await Hangar.findOne(
@@ -471,8 +462,7 @@ router.put("/hangar", async (req, res) => {
 
 router.put("/oficina", async (req, res) => {
 	const { email } = req.registro;
-	const { Oficina : _Oficina } = req.body;
-	const { FuncionamientoTelefono, LimpiarPC, AcomodarCables } = _Oficina;
+	const { FuncionamientoTelefono, LimpiarPC, AcomodarCables } = req.body;
 	const user = await User.findOne({ where: { email } });
 
 	const oficina = await Oficina.findOne(
@@ -509,7 +499,6 @@ router.put("/oficina", async (req, res) => {
 
 router.put("/balanza", async (req, res) => {
 	const { email } = req.registro;
-	const { Balanza: _Balanza } = req.body;
 	const {
 		RackPrincipalLimpieza,
 		RackPrincipalOrden,
@@ -517,7 +506,7 @@ router.put("/balanza", async (req, res) => {
 		LimpiarPC,
 		UPS,
 		FuncionamientoTelefono,
-	} = _Balanza;
+	} = req.body;
 	const user = await User.findOne({ where: { email } });
 
 	const balanza = await Balanza.findOne(
@@ -552,7 +541,8 @@ router.put("/balanza", async (req, res) => {
 	FuncionamientoTelefono &&
 		(balanza["FuncionamientoTelefono"] = FuncionamientoTelefono);
 	FuncionamientoAP && (balanza["FuncionamientoAP"] = FuncionamientoAP);
-	RackPrincipalLimpieza && (balanza["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
+	RackPrincipalLimpieza &&
+		(balanza["RackPrincipalLimpieza"] = RackPrincipalLimpieza);
 	UPS && (balanza["UPS"] = UPS);
 	LimpiarPC && (balanza["LimpiarPC"] = LimpiarPC);
 	RackPrincipalOrden && (balanza["RackPrincipalOrden"] = RackPrincipalOrden);
@@ -566,8 +556,7 @@ router.put("/balanza", async (req, res) => {
 
 router.put("/agroinsumos", async (req, res) => {
 	const { email } = req.registro;
-	const { Agroinsumos: _Agroinsumos } = req.body;
-	const { FuncionamientoAP } = _Agroinsumos;
+	const { FuncionamientoAP } = req.body;
 	const user = await User.findOne({ where: { email } });
 
 	const agroinsumos = await Agroinsumos.findOne(
@@ -595,9 +584,8 @@ router.put("/agroinsumos", async (req, res) => {
 
 router.put("/camaras", async (req, res) => {
 	const { email } = req.registro;
-	const { Camaras: _Camaras } = req.body;
 
-	const { ChequearVisualizacion } = _Camaras;
+	const { ChequearVisualizacion } = req.body;
 	const user = await User.findOne({ where: { email } });
 
 	const camaras = await Camaras.findOne(

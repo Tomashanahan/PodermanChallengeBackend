@@ -4,16 +4,16 @@ const { Sequelize } = require("sequelize");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, NODE_ENV } =
 	process.env;
 
-const casaPrincipal_model = require("./Models/CasaPrincipal");
-const agroinsumos_model = require("./Models/Agroinsumos");
-const exAgroinsumos_model = require("./Models/ExAgroinsumos");
-const balanza_model = require("./Models/Balanza");
-const camaras_model = require("./Models/Camaras");
-const hangar_model = require("./Models/Hangar");
-const hangaroficina_model = require("./Models/HangarOficina");
-const taller_model = require("./Models/Taller");
-const user_model = require("./Models/User");
-const visita_model = require("./Models/Visita");
+const CasaPrincipalModel = require("./Models/CasaPrincipal");
+const AgroinsumosModel = require("./Models/Agroinsumos");
+const ExAgroinsumosModel = require("./Models/ExAgroinsumos");
+const BalanzaModel = require("./Models/Balanza");
+const CamarasModel = require("./Models/Camaras");
+const HangarModel = require("./Models/Hangar");
+const HangaroficinaModel = require("./Models/HangarOficina");
+const TallerModel = require("./Models/Taller");
+const UserModel = require("./Models/User");
+const VisitaModel = require("./Models/Visita");
 
 const sequelize =
 	NODE_ENV === "production"
@@ -38,6 +38,14 @@ const sequelize =
 				},
 				ssl: true,
 		  })
+		: NODE_ENV === "test"
+		? new Sequelize(
+				`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/podermanTesting`,
+				{
+					logging: false, // set to console.log to see the raw SQL queries
+					native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+				}
+		  )
 		: new Sequelize(
 				`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
 				{
@@ -46,16 +54,16 @@ const sequelize =
 				}
 		  );
 
-casaPrincipal_model(sequelize);
-exAgroinsumos_model(sequelize);
-agroinsumos_model(sequelize);
-balanza_model(sequelize);
-camaras_model(sequelize);
-hangar_model(sequelize);
-hangaroficina_model(sequelize);
-taller_model(sequelize);
-user_model(sequelize);
-visita_model(sequelize);
+CasaPrincipalModel(sequelize);
+AgroinsumosModel(sequelize);
+ExAgroinsumosModel(sequelize);
+BalanzaModel(sequelize);
+CamarasModel(sequelize);
+HangarModel(sequelize);
+HangaroficinaModel(sequelize);
+TallerModel(sequelize);
+UserModel(sequelize);
+VisitaModel(sequelize);
 
 const {
 	CasaPrincipal,
@@ -67,11 +75,7 @@ const {
 	Oficina,
 	Taller,
 	User,
-	Visita,
 } = sequelize.models;
-
-// User.hasMany(Visita);
-// Visita.belongsTo(User);
 
 User.hasMany(CasaPrincipal);
 CasaPrincipal.belongsTo(User);

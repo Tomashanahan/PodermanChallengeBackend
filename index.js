@@ -1,9 +1,9 @@
 const express = require("express");
-
-const server = express();
 const cors = require("cors");
 const { db } = require("./src/db");
 const routes = require("./src/Routes/index");
+
+const server = express();
 
 server.use((req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -21,27 +21,16 @@ server.use(cors());
 server.use(express.json());
 server.use("/", routes);
 
-// db.sync({ force: true }).then(() => {
 db.sync({ force: false }).then(() => {
-	server.listen(process.env.PORT, () => {
-		// console.log("Server rinning in Port:", process.env.PORT);
-	});
+	if (process.env.NODE_ENV === "test") {
+		server.listen(9090, () => {
+			console.log("Server running on Port:", 9090);
+		});
+	} else {
+		server.listen(process.env.PORT, () => {
+			// console.log("Server running on Port:", process.env.PORT);
+		});
+	}
 });
-
-// if (process.env.PORT_TESTIN === "null") {
-// 	console.log("first");
-// 	db.sync({ force: false }).then(() => {
-// 		server.listen(process.env.PORT, () => {
-// 			console.log("Server rinning in Port:", process.env.PORT);
-// 		});
-// 	});
-// } else {
-// 	console.log('process.env.PORT_TESTIN:', process.env.PORT_TESTIN)
-// 	db.sync({ force: true }).then(() => {
-// 		server.listen(process.env.PORT_TESTIN, () => {
-// 			console.log("Server rinning in Port:", process.env.PORT_TESTIN);
-// 		});
-// 	});
-// }
 
 module.exports = server;
