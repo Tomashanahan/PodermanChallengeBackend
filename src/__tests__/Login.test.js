@@ -1,9 +1,29 @@
-const { Sequelize } = require("sequelize");
 const app = require("../../index"); // Link to your app file
 const supertest = require("supertest");
+const {
+	db,
+} = require("../db");
 const request = supertest(app);
 
 describe("when user login", () => {
+	let server;
+	beforeAll(async function () {
+		server = require("../../index.js");
+		await db.sync({ force: true });
+	});
+	
+	afterEach(async function () {
+		server = require("../../index.js");
+		await db.sync({ force: true });
+	});
+	
+	afterAll(async function (done) {
+		await db.sync({ force: true });
+		await db.close();
+	});
+
+
+
 	it("should respond when the user doesn't exists", async (done) => {
 		const res = await request
 			.post(`/login`)

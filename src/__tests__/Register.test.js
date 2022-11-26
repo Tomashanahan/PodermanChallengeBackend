@@ -1,28 +1,43 @@
 const app = require("../../index"); // Link to your app file
 const supertest = require("supertest");
+const { db } = require("../db");
+
 const request = supertest(app);
 
 describe("when the user creates an account", () => {
-	// it("should respond when the user exists", async (done) => {
-	//   // I need to search how to reset the DB just for the tests
-	// 	const createUser = await request
-	//   .post(`/register`)
-	//   .send({
-	//     fullName: "tomas shanahan",
-	//     email: "newUser@hotmial.com",
-	//     team: "Microinformatica",
-	//     password: "admin12345",
-	//   })
-	//   .set("Accept", "application/json");
+	let server;
+	beforeAll(async function () {
+		server = require("../../index.js");
+		await db.sync({ force: true });
+	});
 
-	// expect(createUser.body.fullName).toBe("tomas shanahan")
-	// expect(createUser.body.email).toBe("newUser@hotmial.com")
-	// expect(createUser.body.team).toBe("Microinformatica")
-	// 	done();
-	// });
+	afterEach(async function () {
+		server = require("../../index.js");
+		await db.sync({ force: true });
+	});
+
+	afterAll(async function (done) {
+		await db.sync({ force: true });
+		await db.close();
+	});
+	it("should respond when the user exists", async (done) => {
+		const createUser = await request
+			.post(`/register`)
+			.send({
+				fullName: "tomas shanahan",
+				email: "newUser@hotmial.com",
+				team: "Microinformatica",
+				password: "admin12345",
+			})
+			.set("Accept", "application/json");
+
+		expect(createUser.body.fullName).toBe("tomas shanahan");
+		expect(createUser.body.email).toBe("newUser@hotmial.com");
+		expect(createUser.body.team).toBe("Microinformatica");
+		done();
+	});
 
 	it("should respond when the user creates an Admin", async (done) => {
-		// I need to search how to reset the DB just for the tests
 		const createUser = await request
 			.post(`/register`)
 			.send({
@@ -33,14 +48,24 @@ describe("when the user creates an account", () => {
 			})
 			.set("Accept", "application/json");
 
-		expect(createUser.body.fullName).toBe("Admin"); // its not passing because the force is in false
+		expect(createUser.body.fullName).toBe("Admin");
 		expect(createUser.body.email).toBe("admin@hotmial.com");
 		expect(createUser.body.rol).toBe("Admin");
 		done();
 	});
 
 	it("should respond when the user exists", async (done) => {
-		// I need to search how to reset the DB just for the tests
+		// creating a user to have the message error
+		await request
+			.post(`/register`)
+			.send({
+				fullName: "tomas shanahan",
+				email: "newUser@hotmial.com",
+				team: "Microinformatica",
+				password: "admin12345",
+			})
+			.set("Accept", "application/json");
+
 		const createUser = await request
 			.post(`/register`)
 			.send({
