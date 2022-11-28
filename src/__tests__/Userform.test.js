@@ -1,9 +1,11 @@
 /* eslint-disable no-undef */
-const request = supertest(app);
-const supertest = require("supertest");
 
-const {db} = require("../db");
 const app = require("../../index"); // Link to your app file
+const {db} = require("../db");
+
+// eslint-disable-next-line import/order
+const supertest = require("supertest");
+const request = supertest(app);
 
 describe("user form", () => {
   beforeAll(async function (done) {
@@ -313,13 +315,13 @@ describe("user form", () => {
         .set("Accept", "application/json");
 
       // completing the form to be able to check if the route is working good
-      await request
+      const _casaPrincipal = await request
         .post(`/userForm/form?typeOfCategory=casaPrincipal`)
         .send({CasaPrincipal: infoToAddInTheDataBase.CasaPrincipal})
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _exAgroinsumos = await request
         .post(`/userForm/form?typeOfCategory=exAgroinsumos`)
         .send({
           ExAgroinsumos: infoToAddInTheDataBase.ExAgroinsumos,
@@ -327,7 +329,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _taller = await request
         .post(`/userForm/form?typeOfCategory=taller`)
         .send({
           Taller: infoToAddInTheDataBase.Taller,
@@ -335,7 +337,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _hangar = await request
         .post(`/userForm/form?typeOfCategory=hangar`)
         .send({
           Hangar: infoToAddInTheDataBase.Hangar,
@@ -343,7 +345,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _oficina = await request
         .post(`/userForm/form?typeOfCategory=oficina`)
         .send({
           Oficina: infoToAddInTheDataBase.Oficina,
@@ -351,7 +353,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _balanza = await request
         .post(`/userForm/form?typeOfCategory=balanza`)
         .send({
           Balanza: infoToAddInTheDataBase.Balanza,
@@ -359,7 +361,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _agroinsumos = await request
         .post(`/userForm/form?typeOfCategory=agroinsumos`)
         .send({
           Agroinsumos: infoToAddInTheDataBase.Agroinsumos,
@@ -367,7 +369,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _camaras = await request
         .post(`/userForm/form?typeOfCategory=camaras`)
         .send({
           Camaras: infoToAddInTheDataBase.Camaras,
@@ -425,8 +427,8 @@ describe("user form", () => {
           UPS: "No",
         },
       };
-      // creating a new user
 
+      // creating a new user
       await request
         .post(`/register`)
         .send({
@@ -450,7 +452,7 @@ describe("user form", () => {
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
       // updating the values in the form to be able to check if the route is working good
-      await request
+      const _casaPrincipal = await request
         .put(`/userForm/casaprincipal`)
         .send(infoToModifyInTheDataBase.CasaPrincipal)
         .set("Accept", "application/json")
@@ -509,7 +511,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _exAgroinsumos = await request
         .put(`/userForm/exAgroinsumos`)
         .send(infoToModifyInTheDataBase.ExAgroinsumos)
         .set("Accept", "application/json")
@@ -571,7 +573,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _taller = await request
         .put(`/userForm/taller`)
         .send(infoToModifyInTheDataBase.Taller)
         .set("Accept", "application/json")
@@ -631,7 +633,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _hangar = await request
         .put(`/userForm/hangar`)
         .send(infoToModifyInTheDataBase.Hangar)
         .set("Accept", "application/json")
@@ -688,7 +690,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _oficina = await request
         .put(`/userForm/oficina`)
         .send(infoToModifyInTheDataBase.Oficina)
         .set("Accept", "application/json")
@@ -753,7 +755,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _balanza = await request
         .put(`/userForm/balanza`)
         .send(infoToModifyInTheDataBase.Balanza)
         .set("Accept", "application/json")
@@ -802,7 +804,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _agroinsumos = await request
         .put(`/userForm/agroinsumos`)
         .send(infoToModifyInTheDataBase.Agroinsumos)
         .set("Accept", "application/json")
@@ -851,7 +853,7 @@ describe("user form", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginTheNewUserToTakeTheToken.body.token}`);
 
-      await request
+      const _camaras = await request
         .put(`/userForm/camaras`)
         .send(infoToModifyInTheDataBase.Camaras)
         .set("Accept", "application/json")

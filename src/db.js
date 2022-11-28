@@ -12,7 +12,6 @@ const HangarModel = require("./Models/Hangar");
 const HangaroficinaModel = require("./Models/HangarOficina");
 const TallerModel = require("./Models/Taller");
 const UserModel = require("./Models/User");
-const VisitaModel = require("./Models/Visita");
 
 const sequelize =
   NODE_ENV === "production"
@@ -38,7 +37,7 @@ const sequelize =
         ssl: true,
       })
     : NODE_ENV === "test"
-    ? new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/podermanTesting`, {
+    ? new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/podermantesting`, {
         logging: false, // set to console.log to see the raw SQL queries
         native: false, // lets Sequelize know we can use pg-native for ~30% more speed
       })
@@ -56,20 +55,9 @@ HangarModel(sequelize);
 HangaroficinaModel(sequelize);
 TallerModel(sequelize);
 UserModel(sequelize);
-VisitaModel(sequelize);
 
-const {
-  CasaPrincipal,
-  Agroinsumos,
-  Balanza,
-  Camaras,
-  ExAgroinsumos,
-
-  Hangar,
-  Oficina,
-  Taller,
-  User,
-} = sequelize.models;
+const {CasaPrincipal, Agroinsumos, Balanza, Camaras, ExAgroinsumos, Hangar, Oficina, Taller, User} =
+  sequelize.models;
 
 User.hasMany(CasaPrincipal);
 CasaPrincipal.belongsTo(User);
