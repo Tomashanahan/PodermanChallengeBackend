@@ -7,19 +7,22 @@ const {db} = require("../db");
 const request = supertest(app);
 
 describe("when the admin sears for information", () => {
-  beforeAll(async function () {
+  beforeAll(async function (done) {
     require("../../index.js");
     await db.sync({force: true});
+    done();
   });
 
-  afterEach(async function () {
-    server = require("../../index.js");
+  afterEach(async function (done) {
+    require("../../index.js");
     await db.sync({force: true});
+    done();
   });
 
-  afterAll(async function () {
+  afterAll(async function (done) {
     await db.sync({force: true});
     await db.close();
+    done();
   });
 
   it("should respond when the token is not provided", async (done) => {

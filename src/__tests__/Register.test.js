@@ -7,20 +7,24 @@ const app = require("../../index"); // Link to your app file
 const request = supertest(app);
 
 describe("when the user creates an account", () => {
-  beforeAll(async function () {
+  beforeAll(async function (done) {
     require("../../index.js");
     await db.sync({force: true});
+    done();
   });
 
-  afterEach(async function () {
+  afterEach(async function (done) {
     require("../../index.js");
     await db.sync({force: true});
+    done();
   });
 
-  afterAll(async function () {
+  afterAll(async function (done) {
     await db.sync({force: true});
     await db.close();
+    done();
   });
+
   it("should respond when the user exists", async (done) => {
     const createUser = await request
       .post(`/register`)
