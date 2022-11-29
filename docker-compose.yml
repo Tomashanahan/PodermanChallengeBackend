@@ -1,0 +1,30 @@
+version: '3.8'
+
+services: 
+  node_backend:
+    container_name: poderman_backend 
+    image: node_tabnine:0.0.4
+    build: 
+      context: .
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_USER= "postgres"
+      - DB_PASSWORD= "1234"
+      - DB_HOST= "localhost"
+    depends_on: 
+      - node_db
+  node_db: 
+    container_name: node_db
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=poderman
+    volumes:
+      - nps_data:/var/lib/postgresql/data
+
+volumes:
+  nps_data: {}
